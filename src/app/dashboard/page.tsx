@@ -74,14 +74,14 @@ function SensorGrid({ readings }: { readings: SensorReading[] }) {
         <div
           key={reading.sensorId}
           className={cn(
-            'flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg border transition-all duration-300',
+            'flex flex-col items-center justify-center p-2 rounded border transition-all duration-300',
             getStatusColor(reading.status)
           )}
         >
-          <span className="text-[10px] sm:text-xs font-medium uppercase">
+          <span className="text-[9px] sm:text-xs font-medium uppercase">
             {reading.sensorId}
           </span>
-          <span className="text-lg sm:text-xl font-bold">
+          <span className="text-base sm:text-xl font-bold">
             {reading.temperature.toFixed(1)}°
           </span>
         </div>
@@ -97,7 +97,7 @@ export default function DashboardPage() {
     setReadings(generateSensorReadings());
     const interval = setInterval(() => {
       setReadings(generateSensorReadings());
-    }, 5000); // Update every 5 seconds
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -112,91 +112,95 @@ export default function DashboardPage() {
   const activeAlerts = readings.filter((r) => r.status === 'alert').length;
 
   return (
-    <div className="space-y-3 sm:space-y-6">
-       <h1 className="text-xl sm:text-3xl font-bold font-headline">Hi, Jennifer</h1>
+    <div className="space-y-3 sm:space-y-6 max-w-full overflow-hidden">
+       <h1 className="text-lg sm:text-3xl font-bold font-headline">Hi, Jennifer</h1>
       <div className="grid gap-2 sm:gap-4 grid-cols-2">
         <Card className="p-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 sm:pb-2">
-            <CardTitle className="text-xs sm:text-sm font-medium">Highest</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-2.5 sm:p-3 sm:pb-2">
+            <CardTitle className="text-[11px] sm:text-sm font-medium">Highest</CardTitle>
             <ArrowUp className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" />
           </CardHeader>
-          <CardContent className="p-3 pt-0">
-            <div className="text-xl sm:text-2xl font-bold">{highestTemp.toFixed(1)}°</div>
+          <CardContent className="p-2.5 pt-0 sm:p-3 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold">{highestTemp.toFixed(1)}°</div>
           </CardContent>
         </Card>
         <Card className="p-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 sm:pb-2">
-            <CardTitle className="text-xs sm:text-sm font-medium">Lowest</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-2.5 sm:p-3 sm:pb-2">
+            <CardTitle className="text-[11px] sm:text-sm font-medium">Lowest</CardTitle>
             <ArrowDown className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500" />
           </CardHeader>
-          <CardContent className="p-3 pt-0">
-            <div className="text-xl sm:text-2xl font-bold">{lowestTemp.toFixed(1)}°</div>
+          <CardContent className="p-2.5 pt-0 sm:p-3 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold">{lowestTemp.toFixed(1)}°</div>
           </CardContent>
         </Card>
         <Card className="p-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 sm:pb-2">
-            <CardTitle className="text-xs sm:text-sm font-medium">Average</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-2.5 sm:p-3 sm:pb-2">
+            <CardTitle className="text-[11px] sm:text-sm font-medium">Average</CardTitle>
             <Thermometer className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent className="p-3 pt-0">
-            <div className="text-xl sm:text-2xl font-bold">{avgTemp.toFixed(1)}°</div>
+          <CardContent className="p-2.5 pt-0 sm:p-3 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold">{avgTemp.toFixed(1)}°</div>
           </CardContent>
         </Card>
         <Card className="p-0">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-3 sm:pb-2">
-            <CardTitle className="text-xs sm:text-sm font-medium">Alerts</CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 p-2.5 sm:p-3 sm:pb-2">
+            <CardTitle className="text-[11px] sm:text-sm font-medium">Alerts</CardTitle>
             <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4 text-destructive" />
           </CardHeader>
-          <CardContent className="p-3 pt-0">
-            <div className="text-xl sm:text-2xl font-bold">{activeAlerts}</div>
+          <CardContent className="p-2.5 pt-0 sm:p-3 sm:pt-0">
+            <div className="text-lg sm:text-2xl font-bold">{activeAlerts}</div>
           </CardContent>
         </Card>
       </div>
       
       <Card>
-        <CardHeader className="p-4 sm:p-6">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-xl">
-            <Activity className="h-4 w-4 sm:h-5 sm:w-5" /> Real-Time Sensors
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="flex items-center gap-1.5 text-sm sm:text-xl">
+            <Activity className="h-3.5 w-3.5 sm:h-5 sm:w-5" /> Real-Time Sensors
           </CardTitle>
-          <CardDescription className="text-xs sm:text-sm">
+          <CardDescription className="text-[10px] sm:text-sm">
             Live temperature from all 8 sensors.
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+        <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
           <SensorGrid readings={readings} />
         </CardContent>
       </Card>
       
       <Card>
-        <CardHeader className="p-4 sm:p-6">
-          <CardTitle className="flex items-center gap-2 text-base sm:text-xl">
-            <LineChart className="h-4 w-4 sm:h-5 sm:w-5" /> 24-Hour Trend
+        <CardHeader className="p-3 sm:p-6">
+          <CardTitle className="flex items-center gap-1.5 text-sm sm:text-xl">
+            <LineChart className="h-3.5 w-3.5 sm:h-5 sm:w-5" /> 24-Hour Trend
           </CardTitle>
-          <CardDescription className="text-xs sm:text-sm">
+          <CardDescription className="text-[10px] sm:text-sm">
             Average temperature over the last 24 hours.
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
-          <ChartContainer config={chartConfig} className="h-[180px] sm:h-[250px] w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <RechartsLineChart data={dailyTrend} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} fontSize={9} />
-                <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={9} />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent indicator="line" />}
-                />
-                <Line
-                  dataKey="avgTemp"
-                  type="monotone"
-                  stroke="var(--color-avgTemp)"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </RechartsLineChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+        <CardContent className="p-3 pt-0 sm:p-6 sm:pt-0">
+          <div className="w-full overflow-x-auto -mx-3 sm:mx-0">
+            <div className="min-w-[320px] px-3 sm:px-0">
+              <ChartContainer config={chartConfig} className="h-[160px] sm:h-[250px] w-full">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RechartsLineChart data={dailyTrend} margin={{ top: 5, right: 5, left: -25, bottom: 5 }}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                    <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} fontSize={8} />
+                    <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={8} />
+                    <ChartTooltip
+                      cursor={false}
+                      content={<ChartTooltipContent indicator="line" />}
+                    />
+                    <Line
+                      dataKey="avgTemp"
+                      type="monotone"
+                      stroke="var(--color-avgTemp)"
+                      strokeWidth={2}
+                      dot={false}
+                    />
+                  </RechartsLineChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
