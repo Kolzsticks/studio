@@ -69,19 +69,19 @@ function SensorGrid({ readings }: { readings: SensorReading[] }) {
   };
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-4">
+    <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-4">
       {readings.map((reading) => (
         <div
           key={reading.sensorId}
           className={cn(
-            'flex flex-col items-center justify-center p-4 rounded-lg border transition-all duration-300',
+            'flex flex-col items-center justify-center p-2 md:p-4 rounded-lg border transition-all duration-300',
             getStatusColor(reading.status)
           )}
         >
-          <span className="text-sm font-medium uppercase">
+          <span className="text-xs md:text-sm font-medium uppercase">
             {reading.sensorId}
           </span>
-          <span className="text-2xl font-bold">
+          <span className="text-xl md:text-2xl font-bold">
             {reading.temperature.toFixed(1)}°
           </span>
         </div>

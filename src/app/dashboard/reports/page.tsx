@@ -146,7 +146,7 @@ export default function ReportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2"><Bot /> AI-Powered Report Summary</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-xl md:text-2xl"><Bot /> AI-Powered Report Summary</CardTitle>
           <CardDescription>
             Generate a concise summary of your recent health data using AI. This can be shared with healthcare professionals.
           </CardDescription>
@@ -178,34 +178,36 @@ export default function ReportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2"><FileText /> Historical Data</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-xl md:text-2xl"><FileText /> Historical Data</CardTitle>
           <CardDescription>
             A log of your key metrics from the past week.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-right">Max Temp (°C)</TableHead>
-                <TableHead className="text-right">Min Temp (°C)</TableHead>
-                <TableHead className="text-right">Avg Temp (°C)</TableHead>
-                <TableHead className="text-right">Alerts</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {weeklyTrend.slice().reverse().map((day) => (
-                <TableRow key={day.date}>
-                  <TableCell className="font-medium">{new Date(day.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</TableCell>
-                  <TableCell className="text-right">{day.maxTemp}</TableCell>
-                  <TableCell className="text-right">{day.minTemp}</TableCell>
-                  <TableCell className="text-right">{day.avgTemp}</TableCell>
-                  <TableCell className="text-right">{day.alerts}</TableCell>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Date</TableHead>
+                  <TableHead className="text-right">Max Temp (°C)</TableHead>
+                  <TableHead className="text-right">Min Temp (°C)</TableHead>
+                  <TableHead className="text-right">Avg Temp (°C)</TableHead>
+                  <TableHead className="text-right">Alerts</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {weeklyTrend.slice().reverse().map((day) => (
+                  <TableRow key={day.date}>
+                    <TableCell className="font-medium whitespace-nowrap">{new Date(day.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</TableCell>
+                    <TableCell className="text-right">{day.maxTemp}</TableCell>
+                    <TableCell className="text-right">{day.minTemp}</TableCell>
+                    <TableCell className="text-right">{day.avgTemp}</TableCell>
+                    <TableCell className="text-right">{day.alerts}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
     </div>
