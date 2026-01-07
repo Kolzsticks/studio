@@ -31,7 +31,7 @@ export function MainNav() {
   const pathname = usePathname();
 
   return (
-    <>
+    <div className="flex flex-col h-full">
       <SidebarHeader className="p-4">
         <BravaLogo />
       </SidebarHeader>
@@ -61,6 +61,6 @@ export function MainNav() {
           <span className="group-data-[collapsed=true]:hidden">New Reading</span>
         </Button>
       </SidebarFooter>
-    </>
+    </div>
   );
 }

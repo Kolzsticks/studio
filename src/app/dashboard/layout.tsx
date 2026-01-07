@@ -15,7 +15,7 @@ export default function DashboardLayout({
 }) {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full">
+      <div className="flex flex-col md:flex-row min-h-[100svh] w-full bg-background">
         <Sidebar collapsible="md" variant="sidebar" className="border-r hidden md:flex">
           <MainNav />
         </Sidebar>
