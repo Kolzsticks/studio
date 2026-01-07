@@ -1,4 +1,6 @@
-import { Bell, Wifi, Battery } from 'lucide-react';
+'use client';
+
+import { Bell, Wifi, Battery, HeartPulse } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MainNav } from '@/components/main-nav';
 import { UserNav } from '@/components/user-nav';
@@ -18,14 +20,11 @@ export default function DashboardLayout({
           <MainNav />
         </Sidebar>
         <div className="flex flex-col flex-1">
-          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-6">
+          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4">
             <div className="md:hidden">
               <BravaLogo />
             </div>
-            <div className="flex-1 text-center md:text-left">
-              <h1 className="text-lg font-semibold md:hidden">Hi, Jennifer</h1>
-            </div>
-            <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <Battery className="h-5 w-5" />
                 <span className="text-muted-foreground">92%</span>

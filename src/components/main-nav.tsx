@@ -36,7 +36,7 @@ export function MainNav() {
         <BravaLogo />
       </SidebarHeader>
       <Separator />
-      <SidebarContent className="p-4">
+      <SidebarContent className="p-4 flex-grow">
         <SidebarMenu>
           {navItems.map((item) => (
             <SidebarMenuItem key={item.href}>

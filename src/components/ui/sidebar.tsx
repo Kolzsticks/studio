@@ -120,7 +120,7 @@ const SidebarContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => {
-  return <div ref={ref} className={cn('flex-1', className)} {...props} />;
+  return <div ref={ref} className={cn('', className)} {...props} />;
 });
 SidebarContent.displayName = 'SidebarContent';
 
@@ -132,7 +132,7 @@ const SidebarFooter = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        'mt-auto border-t p-2 flex',
+        'border-t p-2 flex',
         'group-data-[collapsed=true]:justify-center',
         className
       )}
