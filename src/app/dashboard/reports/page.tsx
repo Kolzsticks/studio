@@ -53,22 +53,23 @@ function TrendChart({ data, period }: { data: any[]; period: 'daily' | 'weekly' 
   const xDataKey = period === 'daily' ? 'date' : 'date';
 
   return (
-    <ChartContainer config={chartConfig} className="h-[300px] w-full">
+    <ChartContainer config={chartConfig} className="h-[250px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <RechartsLineChart data={data} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
+        <RechartsLineChart data={data} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey={xDataKey}
             tickLine={false}
             axisLine={false}
             tickMargin={8}
+            fontSize={10}
             tickFormatter={(value) => {
               if (period === 'weekly') return new Date(value).toLocaleDateString('en-US', { weekday: 'short' });
               if (period === 'monthly') return new Date(value).toLocaleDateString('en-US', { day: 'numeric' });
               return value;
             }}
           />
-          <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} />
+          <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={10} />
           <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
           <Line dataKey="avgTemp" type="monotone" stroke="var(--color-avgTemp)" strokeWidth={2} dot={false} />
           <Line dataKey="maxTemp" type="monotone" stroke="var(--color-maxTemp)" strokeWidth={2} dot={false} />
@@ -111,51 +112,51 @@ export default function ReportsPage() {
 
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <h1 className="text-3xl font-bold font-headline">Health Reports</h1>
 
       <Card>
         <CardHeader>
-          <CardTitle>Temperature Trends</CardTitle>
+          <CardTitle className="text-xl">Temperature Trends</CardTitle>
           <CardDescription>
-            View daily, weekly, and monthly temperature trends.
+            Daily, weekly, and monthly trends.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="weekly">
-            <TabsList>
+            <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="daily">Daily</TabsTrigger>
               <TabsTrigger value="weekly">Weekly</TabsTrigger>
               <TabsTrigger value="monthly">Monthly</TabsTrigger>
             </TabsList>
-            <TabsContent value="daily">
+            <TabsContent value="daily" className="mt-4">
               <TrendChart data={dailyTrend} period="daily" />
             </TabsContent>
-            <TabsContent value="weekly">
+            <TabsContent value="weekly" className="mt-4">
               <TrendChart data={weeklyTrend} period="weekly" />
             </TabsContent>
-            <TabsContent value="monthly">
+            <TabsContent value="monthly" className="mt-4">
               <TrendChart data={monthlyTrend} period="monthly" />
             </TabsContent>
           </Tabs>
         </CardContent>
-        <CardFooter className="justify-end">
-            <Button variant="outline"><Download className="mr-2 h-4 w-4" /> Export as PDF</Button>
+        <CardFooter>
+            <Button variant="outline" size="sm"><Download className="mr-2 h-4 w-4" /> Export</Button>
         </CardFooter>
       </Card>
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl md:text-2xl"><Bot /> AI-Powered Report Summary</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-xl"><Bot /> AI Report Summary</CardTitle>
           <CardDescription>
-            Generate a concise summary of your recent health data using AI. This can be shared with healthcare professionals.
+            Generate a summary of your recent health data.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           {isLoading && (
             <div className="flex items-center justify-center p-8 rounded-lg border border-dashed">
                 <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-                <p className="text-muted-foreground">Generating your report...</p>
+                <p className="text-muted-foreground">Generating...</p>
             </div>
           )}
           {summary && (
@@ -164,13 +165,13 @@ export default function ReportsPage() {
              </div>
           )}
           {!isLoading && !summary && (
-             <div className="flex items-center justify-center p-8 rounded-lg border border-dashed">
-                <p className="text-muted-foreground">Your AI summary will appear here.</p>
+             <div className="flex flex-col items-center justify-center p-8 rounded-lg border border-dashed text-center">
+                <p className="text-sm text-muted-foreground">Your AI summary will appear here.</p>
             </div>
           )}
         </CardContent>
         <CardFooter>
-            <Button onClick={handleGenerateSummary} disabled={isLoading}>
+            <Button onClick={handleGenerateSummary} disabled={isLoading} size="sm">
                 {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Generating...</> : 'Generate Summary'}
             </Button>
         </CardFooter>
@@ -178,9 +179,9 @@ export default function ReportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-xl md:text-2xl"><FileText /> Historical Data</CardTitle>
+          <CardTitle className="flex items-center gap-2 text-xl"><FileText /> Historical Data</CardTitle>
           <CardDescription>
-            A log of your key metrics from the past week.
+            Your key metrics from the past week.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -189,19 +190,17 @@ export default function ReportsPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Max Temp (°C)</TableHead>
-                  <TableHead className="text-right">Min Temp (°C)</TableHead>
-                  <TableHead className="text-right">Avg Temp (°C)</TableHead>
+                  <TableHead className="text-right">Max</TableHead>
+                  <TableHead className="text-right">Avg</TableHead>
                   <TableHead className="text-right">Alerts</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {weeklyTrend.slice().reverse().map((day) => (
                   <TableRow key={day.date}>
-                    <TableCell className="font-medium whitespace-nowrap">{new Date(day.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}</TableCell>
-                    <TableCell className="text-right">{day.maxTemp}</TableCell>
-                    <TableCell className="text-right">{day.minTemp}</TableCell>
-                    <TableCell className="text-right">{day.avgTemp}</TableCell>
+                    <TableCell className="font-medium whitespace-nowrap">{new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</TableCell>
+                    <TableCell className="text-right">{day.maxTemp.toFixed(1)}</TableCell>
+                    <TableCell className="text-right">{day.avgTemp.toFixed(1)}</TableCell>
                     <TableCell className="text-right">{day.alerts}</TableCell>
                   </TableRow>
                 ))}

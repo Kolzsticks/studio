@@ -69,19 +69,19 @@ function SensorGrid({ readings }: { readings: SensorReading[] }) {
   };
 
   return (
-    <div className="grid grid-cols-4 md:grid-cols-8 gap-2 md:gap-4">
+    <div className="grid grid-cols-4 gap-2">
       {readings.map((reading) => (
         <div
           key={reading.sensorId}
           className={cn(
-            'flex flex-col items-center justify-center p-2 md:p-4 rounded-lg border transition-all duration-300',
+            'flex flex-col items-center justify-center p-2 rounded-lg border transition-all duration-300',
             getStatusColor(reading.status)
           )}
         >
-          <span className="text-xs md:text-sm font-medium uppercase">
+          <span className="text-xs font-medium uppercase">
             {reading.sensorId}
           </span>
-          <span className="text-xl md:text-2xl font-bold">
+          <span className="text-xl font-bold">
             {reading.temperature.toFixed(1)}°
           </span>
         </div>
@@ -112,66 +112,54 @@ export default function DashboardPage() {
   const activeAlerts = readings.filter((r) => r.status === 'alert').length;
 
   return (
-    <div className="space-y-8">
-       <h1 className="text-2xl md:text-3xl font-bold font-headline">Hi, Jennifer</h1>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="space-y-6">
+       <h1 className="text-3xl font-bold font-headline">Hi, Jennifer</h1>
+      <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Highest Temp</CardTitle>
+            <CardTitle className="text-sm font-medium">Highest</CardTitle>
             <ArrowUp className="h-4 w-4 text-red-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{highestTemp.toFixed(2)}°C</div>
-            <p className="text-xs text-muted-foreground">
-              Current maximum reading
-            </p>
+            <div className="text-2xl font-bold">{highestTemp.toFixed(1)}°</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Lowest Temp</CardTitle>
+            <CardTitle className="text-sm font-medium">Lowest</CardTitle>
             <ArrowDown className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{lowestTemp.toFixed(2)}°C</div>
-            <p className="text-xs text-muted-foreground">
-              Current minimum reading
-            </p>
+            <div className="text-2xl font-bold">{lowestTemp.toFixed(1)}°</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Average Temp</CardTitle>
+            <CardTitle className="text-sm font-medium">Average</CardTitle>
             <Thermometer className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{avgTemp.toFixed(2)}°C</div>
-            <p className="text-xs text-muted-foreground">
-              Across all sensors
-            </p>
+            <div className="text-2xl font-bold">{avgTemp.toFixed(1)}°</div>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Alerts</CardTitle>
+            <CardTitle className="text-sm font-medium">Alerts</CardTitle>
             <AlertTriangle className="h-4 w-4 text-destructive" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activeAlerts}</div>
-            <p className="text-xs text-muted-foreground">
-              Sensors in alert status
-            </p>
           </CardContent>
         </Card>
       </div>
       
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Activity /> Real-Time Sensor Readings
+          <CardTitle className="flex items-center gap-2 text-xl">
+            <Activity /> Real-Time Sensors
           </CardTitle>
           <CardDescription>
-            Live temperature from all 8 sensors. Data refreshes automatically.
+            Live temperature from all 8 sensors.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -181,20 +169,20 @@ export default function DashboardPage() {
       
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <LineChart /> 24-Hour Temperature Trend
+          <CardTitle className="flex items-center gap-2 text-xl">
+            <LineChart /> 24-Hour Trend
           </CardTitle>
           <CardDescription>
-            Average temperature readings over the last 24 hours.
+            Average temperature over the last 24 hours.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[300px] w-full">
+          <ChartContainer config={chartConfig} className="h-[250px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <RechartsLineChart data={dailyTrend} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
-                <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} />
+                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} fontSize={10} />
+                <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={10} />
                 <ChartTooltip
                   cursor={false}
                   content={<ChartTooltipContent indicator="line" />}
