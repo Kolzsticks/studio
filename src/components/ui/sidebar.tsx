@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/lib/utils"
 
@@ -189,9 +190,10 @@ const SidebarMenuButton = React.forwardRef<
     isActive?: boolean
     asChild?: boolean
   } & VariantProps<typeof sidebarMenuButtonVariants>
->(({ className, variant, size, isActive, ...props }, ref) => {
+>(({ className, variant, size, isActive, asChild = false, ...props }, ref) => {
+  const Comp = asChild ? Slot : "button"
   return (
-    <button
+    <Comp
       ref={ref}
       className={cn(
         sidebarMenuButtonVariants({ variant, size, isActive }),
