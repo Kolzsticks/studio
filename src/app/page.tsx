@@ -22,7 +22,7 @@ export default function LandingPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button asChild size="lg" className="text-lg">
-                <Link href="/dashboard">Enter Dashboard</Link>
+                <Link href="/onboarding">Get Started</Link>
               </Button>
               <Button variant="outline" size="lg" className="text-lg">
                 Learn More
