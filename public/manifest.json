@@ -1,0 +1,21 @@
+{
+  "name": "Brava Health",
+  "short_name": "Brava",
+  "description": "A progressive web app for a smart bra that monitors breast health through temperature sensors.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F5F5",
+  "theme_color": "#70CBC9",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
