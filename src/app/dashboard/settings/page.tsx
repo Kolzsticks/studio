@@ -17,6 +17,8 @@ import { Switch } from '@/components/ui/switch';
 import { mockUser } from '@/lib/mock-data';
 import { useState } from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Users, Trash2 } from 'lucide-react';
+import type { FamilyContact } from '@/lib/types';
 
 function ProfileForm() {
     return (
@@ -60,12 +62,12 @@ function PreferencesForm() {
             </CardHeader>
             <CardContent className="space-y-8">
                  <div className="space-y-4">
-                    <Label htmlFor="threshold">Temperature Alert Threshold (°C)</Label>
+                    <Label htmlFor="threshold">Thermal Differential Alert Threshold (°C)</Label>
                     <div className="flex items-center gap-4">
                         <Slider
                             id="threshold"
                             min={0.5}
-                            max={2.5}
+                            max={3.0}
                             step={0.1}
                             value={[threshold]}
                             onValueChange={(value) => setThreshold(value[0])}
@@ -73,7 +75,7 @@ function PreferencesForm() {
                         <span className="font-bold text-lg w-24 text-center p-2 rounded-md bg-secondary">{threshold.toFixed(1)}°C</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                        Set the temperature difference that will trigger an alert.
+                        Set the temperature difference between breasts that will trigger an alert.
                     </p>
                 </div>
                 <div className="flex items-center justify-between rounded-lg border p-4">
@@ -98,27 +100,33 @@ function PreferencesForm() {
     );
 }
 
-function DeviceManagement() {
+function FamilyAlertsForm() {
+    const [contacts, setContacts] = useState<FamilyContact[]>(mockUser.familyContacts);
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Device Management</CardTitle>
-                <CardDescription>Manage your connected Brava smart bra.</CardDescription>
+                <CardTitle className="flex items-center gap-2"><Users /> Family Alert Contacts</CardTitle>
+                <CardDescription>Manage designated family members to be notified in case of a high-risk alert.</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="rounded-lg border p-4 flex items-center justify-between">
-                    <div>
-                        <p className="font-medium">Device ID: {mockUser.pairedDeviceId}</p>
-                        <p className="text-sm text-green-600">Status: Connected & Active</p>
-                    </div>
-                    <Button variant="destructive">Disconnect</Button>
-                </div>
-                <p className="text-sm text-muted-foreground">
-                    To pair a new device, please disconnect the current one first.
-                </p>
+                {contacts.map(contact => (
+                    <Card key={contact.id} className="p-4">
+                        <div className="flex items-start justify-between">
+                            <div>
+                                <h4 className="font-semibold">{contact.name} <span className="text-sm font-normal text-muted-foreground">({contact.relationship})</span></h4>
+                                <p className="text-sm text-muted-foreground">{contact.phone}</p>
+                                <p className="text-sm text-muted-foreground">{contact.email}</p>
+                            </div>
+                            <Button variant="ghost" size="icon">
+                                <Trash2 className="h-4 w-4 text-destructive" />
+                            </Button>
+                        </div>
+                    </Card>
+                ))}
             </CardContent>
-             <CardFooter>
-                <Button variant="outline">Pair New Device</Button>
+            <CardFooter>
+                <Button variant="outline">Add New Contact</Button>
             </CardFooter>
         </Card>
     )
@@ -133,7 +141,7 @@ export default function SettingsPage() {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="profile">Profile</TabsTrigger>
           <TabsTrigger value="preferences">Preferences</TabsTrigger>
-          <TabsTrigger value="device">Device</TabsTrigger>
+          <TabsTrigger value="family-alerts">Family Alerts</TabsTrigger>
         </TabsList>
         <TabsContent value="profile" className="mt-6">
             <ProfileForm />
@@ -141,8 +149,8 @@ export default function SettingsPage() {
         <TabsContent value="preferences" className="mt-6">
             <PreferencesForm />
         </TabsContent>
-        <TabsContent value="device" className="mt-6">
-            <DeviceManagement />
+        <TabsContent value="family-alerts" className="mt-6">
+            <FamilyAlertsForm />
         </TabsContent>
       </Tabs>
     </div>

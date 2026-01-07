@@ -8,7 +8,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -17,7 +16,6 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { mockUser, generateSensorReadings, mockDoctor } from '@/lib/mock-data';
 import { getPersonalizedHealthTips, PersonalizedHealthTipsOutput } from '@/ai/flows/personalized-health-tips';
 import { useToast } from '@/hooks/use-toast';
-import { Separator } from '@/components/ui/separator';
 
 function HealthTipsGenerator() {
   const { toast } = useToast();
@@ -31,12 +29,7 @@ function HealthTipsGenerator() {
       const readings = generateSensorReadings();
       const result = await getPersonalizedHealthTips({
         sensorReadings: readings,
-        userProfile: {
-          id: mockUser.id,
-          name: mockUser.name,
-          email: mockUser.email,
-          threshold: mockUser.threshold,
-        },
+        user: mockUser
       });
       setTips(result);
       toast({
@@ -57,14 +50,14 @@ function HealthTipsGenerator() {
   return (
      <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2"><Bot /> AI-Powered Health Management</CardTitle>
+          <CardTitle className="flex items-center gap-2"><Bot /> AI-Powered Health Tips</CardTitle>
           <CardDescription>
             Generate personalized health tips and educational content based on your latest sensor data.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
             <Button onClick={handleGenerateTips} disabled={isLoading} size="lg">
-                {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing Data...</> : <><Lightbulb className="mr-2 h-4 w-4" /> Get My Health Tips</>}
+                {isLoading ? <><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Analyzing Data...</> : <><Lightbulb className="mr-2 h-4 w-4" /> Get Health Tips</>}
             </Button>
             {isLoading && (
                 <div className="flex items-center justify-center p-8 rounded-lg border border-dashed">
@@ -157,14 +150,14 @@ function MyAppointments() {
 export default function ConsultationPage() {
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-bold font-headline">Expert Consultation</h1>
-      <Tabs defaultValue="health-management">
+      <h1 className="text-3xl font-bold font-headline">Expert Consultation & Tips</h1>
+      <Tabs defaultValue="health-tips">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="health-management">Health Management</TabsTrigger>
+          <TabsTrigger value="health-tips">Health Tips</TabsTrigger>
           <TabsTrigger value="find-doctor">Find a Doctor</TabsTrigger>
           <TabsTrigger value="appointments">My Appointments</TabsTrigger>
         </TabsList>
-        <TabsContent value="health-management" className="mt-6">
+        <TabsContent value="health-tips" className="mt-6">
             <HealthTipsGenerator />
         </TabsContent>
         <TabsContent value="find-doctor" className="mt-6">

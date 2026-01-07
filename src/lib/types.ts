@@ -1,10 +1,11 @@
-export type SensorId = 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h';
+export type SensorSide = 'left' | 'right';
+export type SensorPosition = 'A' | 'B' | 'C' | 'D'; // 4 sensors per side
 
 export type SensorReading = {
-  sensorId: SensorId;
+  side: SensorSide;
+  position: SensorPosition;
   temperature: number; // in Celsius
   timestamp: string; // ISO string
-  status: 'normal' | 'warning' | 'alert';
 };
 
 export type User = {
@@ -13,15 +14,24 @@ export type User = {
   email: string;
   age: number;
   medicalHistory: string;
-  threshold: number; // default 1.0°C
+  threshold: number; // differential threshold
   pairedDeviceId?: string;
   avatarUrl: string;
+  familyContacts: FamilyContact[];
+};
+
+export type FamilyContact = {
+  id: string;
+  name: string;
+  relationship: string;
+  phone: string;
+  email: string;
 };
 
 export type HistoricalData = {
   date: string;
-  maxTemp: number;
-  minTemp: number;
-  avgTemp: number;
+  avgDifferential: number;
+  peakAsymmetry: number;
+  volatility: number;
   alerts: number;
 };

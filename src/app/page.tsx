@@ -15,10 +15,10 @@ export default function LandingPage() {
         <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center">
           <div className="flex-1 p-8 md:p-16 lg:p-24 space-y-6 text-center lg:text-left">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-headline tracking-tight text-primary">
-              Welcome to Brava Health
+              Proactive Breast Health Monitoring
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
-              Your personal guide to proactive breast health. Monitor, understand, and take control with real-time insights from our smart bra technology.
+              Take control with real-time thermal analysis. Our smart technology helps you monitor for potential signs, providing peace of mind and enabling early detection.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button asChild size="lg" className="text-lg">

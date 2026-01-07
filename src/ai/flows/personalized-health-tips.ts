@@ -9,23 +9,33 @@
  */
 
 import {ai} from '@/ai/genkit';
+import type { SensorReading, User } from '@/lib/types';
 import {z} from 'genkit';
 
 const PersonalizedHealthTipsInputSchema = z.object({
   sensorReadings: z.array(
     z.object({
-      sensorId: z.enum(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']),
+      side: z.enum(['left', 'right']),
+      position: z.enum(['A', 'B', 'C', 'D']),
       temperature: z.number().describe('Temperature in Celsius.'),
       timestamp: z.string().datetime(),
-      status: z.enum(['normal', 'warning', 'alert']),
     })
   ).describe('An array of sensor readings from the smart bra.'),
-  userProfile: z.object({
-    id: z.string(),
-    name: z.string(),
-    email: z.string().email(),
-    threshold: z.number().describe('Temperature alert threshold in Celsius.'),
-    pairedDeviceId: z.string().optional(),
+  user: z.object({
+      id: z.string(),
+      name: z.string(),
+      email: z.string().email(),
+      age: z.number(),
+      medicalHistory: z.string(),
+      threshold: z.number().describe('Temperature alert threshold in Celsius.'),
+      pairedDeviceId: z.string().optional(),
+      familyContacts: z.array(z.object({
+        id: z.string(),
+        name: z.string(),
+        relationship: z.string(),
+        phone: z.string(),
+        email: z.string(),
+      })),
   }).describe('The user profile information.'),
 });
 export type PersonalizedHealthTipsInput = z.infer<typeof PersonalizedHealthTipsInputSchema>;
@@ -50,15 +60,16 @@ const prompt = ai.definePrompt({
 
   Sensor Readings:
   {{#each sensorReadings}}
-  - Sensor ID: {{this.sensorId}}, Temperature: {{this.temperature}}°C, Status: {{this.status}}, Timestamp: {{this.timestamp}}
+  - Side: {{this.side}}, Position: {{this.position}}, Temperature: {{this.temperature}}°C, Timestamp: {{this.timestamp}}
   {{/each}}
 
   User Profile:
-  - Name: {{{userProfile.name}}}
-  - Email: {{{userProfile.email}}}
-  - Temperature Threshold: {{{userProfile.threshold}}}°C
+  - Name: {{{user.name}}}
+  - Age: {{{user.age}}}
+  - Medical History: {{{user.medicalHistory}}}
+  - Differential Threshold: {{{user.threshold}}}°C
 
-  Provide concise and actionable health tips based on the sensor data. Also, include relevant breast health education content.
+  Provide concise and actionable health tips based on the sensor data and user's profile. Also, include relevant breast health education content.
 
   Format the output as a JSON object with "healthTips" (an array of strings) and "educationalContent" (a string).
   `,

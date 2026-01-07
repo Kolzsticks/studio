@@ -23,7 +23,7 @@ import { Button } from './ui/button';
 export const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
-  { href: '/dashboard/consultation', icon: MessageSquareHeart, label: 'Consultation' },
+  { href: '/dashboard/consultation', icon: MessageSquareHeart, label: 'Consult' },
   { href: '/dashboard/settings', icon: Settings, label: 'Settings' },
 ];
 
@@ -58,7 +58,7 @@ export function MainNav() {
       <SidebarFooter className="p-4">
         <Button className="w-full">
           <HeartPulse className="mr-2 h-4 w-4" />
-          <span className="group-data-[collapsed=true]:hidden">Trigger a Reading</span>
+          <span className="group-data-[collapsed=true]:hidden">New Reading</span>
         </Button>
       </SidebarFooter>
     </>
