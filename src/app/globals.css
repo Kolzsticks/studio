@@ -4,27 +4,27 @@
 
 @layer base {
   :root {
-    --background: 0 0% 96.1%; /* #F5F5F5 */
+    --background: 0 0% 98%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 178 41% 62%; /* #70CBC9 */
-    --primary-foreground: 224 71.4% 4.1%;
-    --secondary: 0 0% 92%;
+    --primary: 336 82% 58%; /* Hot Pink */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 330 80% 96%;
     --secondary-foreground: 224 71.4% 4.1%;
     --muted: 0 0% 92%;
     --muted-foreground: 225.5 8.9% 43.1%;
-    --accent: 201 58% 80%; /* #A7D9ED */
+    --accent: 330 80% 90%; /* Lighter Pink */
     --accent-foreground: 224 71.4% 4.1%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 0 0% 89.8%;
     --input: 0 0% 89.8%;
-    --ring: 178 41% 62%;
-    --chart-1: 178 41% 62%;
-    --chart-2: 201 58% 80%;
+    --ring: 336 71% 51%;
+    --chart-1: 336 82% 58%;
+    --chart-2: 330 80% 75%;
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
@@ -38,21 +38,21 @@
     --card-foreground: 0 0% 98%;
     --popover: 204 10% 10%;
     --popover-foreground: 0 0% 98%;
-    --primary: 178 41% 62%;
-    --primary-foreground: 224 71.4% 4.1%;
+    --primary: 336 82% 58%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 204 10% 18%;
     --secondary-foreground: 0 0% 98%;
     --muted: 204 10% 18%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 201 58% 70%;
-    --accent-foreground: 224 71.4% 4.1%;
+    --accent: 330 80% 30%;
+    --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 204 10% 20%;
     --input: 204 10% 20%;
-    --ring: 178 41% 55%;
-    --chart-1: 178 41% 62%;
-    --chart-2: 201 58% 70%;
+    --ring: 336 71% 51%;
+    --chart-1: 336 82% 58%;
+    --chart-2: 330 80% 75%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;

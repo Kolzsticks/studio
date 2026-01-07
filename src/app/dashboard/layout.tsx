@@ -1,9 +1,10 @@
-import { Bell, Wifi } from 'lucide-react';
+import { Bell, Wifi, Battery } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MainNav } from '@/components/main-nav';
 import { UserNav } from '@/components/user-nav';
 import { SidebarProvider, Sidebar } from '@/components/ui/sidebar';
 import { BottomNav } from '@/components/bottom-nav';
+import { BravaLogo } from '@/components/brava-logo';
 
 export default function DashboardLayout({
   children,
@@ -17,12 +18,19 @@ export default function DashboardLayout({
           <MainNav />
         </Sidebar>
         <div className="flex flex-col flex-1">
-          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-6">
-            <div className="flex-1">
-               {/* Could add breadcrumbs or a page title here */}
+          <header className="sticky top-0 z-10 flex h-16 items-center gap-4 border-b bg-background/80 backdrop-blur-sm px-4 md:px-6">
+            <div className="md:hidden">
+              <BravaLogo />
             </div>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
+            <div className="flex-1 text-center md:text-left">
+              <h1 className="text-lg font-semibold md:hidden">Hi, Jennifer</h1>
+            </div>
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="flex items-center gap-2 text-sm font-medium">
+                <Battery className="h-5 w-5" />
+                <span className="text-muted-foreground">92%</span>
+              </div>
+              <div className="hidden md:flex items-center gap-2 text-sm text-green-600 font-medium">
                 <Wifi className="h-5 w-5" />
                 <span>Connected</span>
               </div>
@@ -33,7 +41,7 @@ export default function DashboardLayout({
               <UserNav />
             </div>
           </header>
-          <main className="flex-1 p-6 md:p-8 bg-background pb-24 md:pb-8">
+          <main className="flex-1 p-4 md:p-8 bg-background pb-24 md:pb-8">
             {children}
           </main>
           <BottomNav />
