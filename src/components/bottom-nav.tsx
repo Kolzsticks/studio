@@ -11,7 +11,7 @@ export function BottomNav() {
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-background border-t z-20">
-      <div className="grid h-full grid-cols-4">
+      <div className="grid h-full grid-cols-5">
         {navItems.map((item) => (
           <Link
             key={item.href}

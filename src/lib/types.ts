@@ -1,21 +1,20 @@
-export type SensorSide = 'left' | 'right';
-export type SensorPosition = 'A' | 'B' | 'C' | 'D'; // 4 sensors per side
-
 export type SensorReading = {
-  side: SensorSide;
-  position: SensorPosition;
+  ultrasound: number; // unitless metric
   temperature: number; // in Celsius
-  timestamp: string; // ISO string
+  bioimpedance: number; // in Ohms
 };
 
-export type User = {
+export type ScanResult = {
   id: string;
+  timestamp: string; // ISO string
+  readings: SensorReading;
+  risk: 'Low' | 'High';
+}
+
+export type User = {
   name: string;
-  email: string;
   age: number;
-  medicalHistory: string;
-  threshold: number; // differential threshold
-  pairedDeviceId?: string;
+  weight: number;
   avatarUrl: string;
   familyContacts: FamilyContact[];
 };

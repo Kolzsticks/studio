@@ -1,14 +1,10 @@
-import type { User, SensorReading, SensorPosition, HistoricalData, FamilyContact } from './types';
+import type { User, HistoricalData, FamilyContact, ScanResult, SensorReading } from './types';
 import { subDays, format } from 'date-fns';
 
 export const mockUser: User = {
-  id: 'user-123',
   name: 'Jennifer',
-  email: 'jennifer@example.com',
   age: 34,
-  medicalHistory: 'No significant history. Annual check-ups are regular.',
-  threshold: 1.5, // Differential temperature threshold in °C
-  pairedDeviceId: 'BRAVA-002',
+  weight: 65,
   avatarUrl: 'https://picsum.photos/seed/user-avatar/100/100',
   familyContacts: [
     { id: 'contact-1', name: 'Michael Smith', relationship: 'Husband', phone: '555-123-4567', email: 'michael@example.com'},
@@ -16,39 +12,40 @@ export const mockUser: User = {
   ]
 };
 
-const SENSOR_POSITIONS: SensorPosition[] = ['A', 'B', 'C', 'D'];
-const NORMAL_TEMP_BASE = 36.5;
+export const generateSensorReadings = (isAnomaly: boolean = false): SensorReading => {
+  let temperature = 36.5 + (Math.random() - 0.5) * 0.8;
+  let bioimpedance = 500 + (Math.random() - 0.5) * 50;
+  let ultrasound = Math.random() * 0.5;
 
-export const generateSensorReadings = (isAnomaly: boolean = false): SensorReading[] => {
-  const readings: SensorReading[] = [];
-  const now = new Date();
-  
-  const anomalySide = Math.random() > 0.5 ? 'left' : 'right';
-  const anomalyPositionIndex = Math.floor(Math.random() * SENSOR_POSITIONS.length);
+  if (isAnomaly) {
+    temperature += 1.8 + Math.random() * 0.5;
+    bioimpedance -= 100 + Math.random() * 50; // Lower impedance can be a sign
+    ultrasound += 0.4 + Math.random() * 0.2; // Higher value for density
+  }
 
-  ['left', 'right'].forEach(side => {
-    SENSOR_POSITIONS.forEach((position, index) => {
-      let temp = NORMAL_TEMP_BASE + (Math.random() - 0.5) * 0.8; // Base temp variation
-
-      if (isAnomaly && side === anomalySide && index === anomalyPositionIndex) {
-        // Introduce a significant temperature spike for the anomaly
-        temp += 1.8 + Math.random() * 0.5;
-      } else if (isAnomaly && side === anomalySide) {
-        // Introduce smaller spikes on other sensors of the anomaly side
-        temp += 0.5 + Math.random() * 0.3;
-      }
-      
-      readings.push({
-        side: side as 'left' | 'right',
-        position: position,
-        temperature: parseFloat(temp.toFixed(2)),
-        timestamp: now.toISOString(),
-      });
-    });
-  });
-
-  return readings;
+  return {
+    temperature: parseFloat(temperature.toFixed(2)),
+    bioimpedance: parseFloat(bioimpedance.toFixed(2)),
+    ultrasound: parseFloat(ultrasound.toFixed(2)),
+  };
 };
+
+export const calculateRisk = (readings: SensorReading): 'Low' | 'High' => {
+  // Simplified risk logic based on ultrasound value
+  return readings.ultrasound >= 0.7 ? 'High' : 'Low';
+};
+
+export const generateNewScan = (isAnomaly: boolean = false): ScanResult => {
+    const readings = generateSensorReadings(isAnomaly);
+    const risk = calculateRisk(readings);
+    return {
+        id: `scan_${new Date().getTime()}`,
+        timestamp: new Date().toISOString(),
+        readings,
+        risk
+    }
+}
+
 
 export const generateHistoricalData = (days: number): HistoricalData[] => {
   const data: HistoricalData[] = [];

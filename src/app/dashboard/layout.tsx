@@ -1,6 +1,6 @@
 'use client';
 
-import { Bell, Wifi, BatteryFull, HeartPulse } from 'lucide-react';
+import { Bell, Wifi, BatteryFull, BluetoothConnected } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MainNav } from '@/components/main-nav';
 import { UserNav } from '@/components/user-nav';
@@ -27,10 +27,10 @@ export default function DashboardLayout({
             <div className="flex flex-1 items-center justify-end gap-2 md:gap-4">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <BatteryFull className="h-5 w-5" />
-                <span className="text-muted-foreground">92%</span>
+                <span className="text-muted-foreground hidden sm:inline">92%</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-green-600 font-medium">
-                <Wifi className="h-5 w-5" />
+                <BluetoothConnected className="h-5 w-5" />
                 <span className="hidden md:inline">Connected</span>
               </div>
               <Button variant="ghost" size="icon" className="rounded-full">

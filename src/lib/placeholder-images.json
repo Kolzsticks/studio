@@ -8,20 +8,20 @@
     },
     {
       "id": "doctor-1",
-      "description": "A professional and friendly looking female doctor.",
-      "imageUrl": "https://images.unsplash.com/photo-1758691461935-202e2ef6b69f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxkb2N0b3IlMjBwcm9mZXNzaW9uYWx8ZW58MHx8fHwxNzY3NzYyOTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A professional and friendly looking female doctor from Nigeria.",
+      "imageUrl": "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxuaWdlcmlhbiUyMGRvY3RvcnxlbnwwfHx8fDE3NjgxNTg4OTF8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "doctor professional"
     },
     {
       "id": "doctor-2",
-      "description": "A professional and friendly looking male doctor.",
-      "imageUrl": "https://images.unsplash.com/photo-1576669801945-7a346954da5a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxkb2N0b3IlMjBwcm9mZXNzaW9uYWx8ZW58MHx8fHwxNzY3NzYyOTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "description": "A professional and friendly looking female doctor.",
+      "imageUrl": "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxmZW1hbGUlMjBkb2N0b3J8ZW58MHx8fHwxNzY4MTU4OTU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "doctor professional"
     },
     {
       "id": "doctor-3",
       "description": "Another professional and friendly looking female doctor.",
-      "imageUrl": "https://images.unsplash.com/photo-1758691461990-03b49d969495?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxkb2N0b3IlMjBwcm9mZXNzaW9uYWx8ZW58MHx8fHwxNzY3NzYyOTQ4fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1537368910025-70035079652d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxmZW1hbGUlMjBkb2N0b3J8ZW58MHx8fHwxNzY4MTU4OTU1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "doctor professional"
     }
   ]

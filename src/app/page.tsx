@@ -18,7 +18,7 @@ export default function LandingPage() {
               Proactive Breast Health Monitoring
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0">
-              Take control with real-time thermal analysis. Our smart technology helps you monitor for potential signs, providing peace of mind and enabling early detection.
+             Take control with real-time breast analysis. Our smart technology empowers you to monitor potential signs early, offering peace of mind and supporting proactive detection.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <Button asChild size="lg" className="text-lg">

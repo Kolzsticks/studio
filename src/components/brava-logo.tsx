@@ -22,7 +22,7 @@ export function BravaLogo({ className, ...props }: SVGProps<SVGSVGElement> & {cl
             />
             <path d="M16 12a4 4 0 100 8 4 4 0 000-8z" fill="#fff" />
         </svg>
-        <span className="text-xl font-bold font-headline text-primary">Brava Health</span>
+        <span className="text-xl font-bold font-headline text-primary">Smart Bra</span>
     </div>
   );
 }
