@@ -53,23 +53,23 @@ function TrendChart({ data, period }: { data: any[]; period: 'daily' | 'weekly' 
   const xDataKey = period === 'daily' ? 'date' : 'date';
 
   return (
-    <ChartContainer config={chartConfig} className="h-[200px] sm:h-[250px] w-full">
+    <ChartContainer config={chartConfig} className="h-[180px] sm:h-[250px] w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <RechartsLineChart data={data} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+        <RechartsLineChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis
             dataKey={xDataKey}
             tickLine={false}
             axisLine={false}
             tickMargin={8}
-            fontSize={10}
+            fontSize={9}
             tickFormatter={(value) => {
               if (period === 'weekly') return new Date(value).toLocaleDateString('en-US', { weekday: 'short' });
               if (period === 'monthly') return new Date(value).toLocaleDateString('en-US', { day: 'numeric' });
               return value;
             }}
           />
-          <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={10} />
+          <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={9} />
           <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
           <Line dataKey="avgTemp" type="monotone" stroke="var(--color-avgTemp)" strokeWidth={2} dot={false} />
           <Line dataKey="maxTemp" type="monotone" stroke="var(--color-maxTemp)" strokeWidth={2} dot={false} />
@@ -112,22 +112,22 @@ export default function ReportsPage() {
 
 
   return (
-    <div className="space-y-4 sm:space-y-6 p-4 sm:p-0">
-      <h1 className="text-2xl sm:text-3xl font-bold font-headline">Health Reports</h1>
+    <div className="space-y-3 sm:space-y-6">
+      <h1 className="text-xl sm:text-3xl font-bold font-headline">Health Reports</h1>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg sm:text-xl">Temperature Trends</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="text-base sm:text-xl">Temperature Trends</CardTitle>
           <CardDescription className="text-xs sm:text-sm">
             Daily, weekly, and monthly trends.
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
           <Tabs defaultValue="weekly">
             <TabsList className="grid w-full grid-cols-3 h-auto">
-              <TabsTrigger value="daily" className="text-xs sm:text-sm">Daily</TabsTrigger>
-              <TabsTrigger value="weekly" className="text-xs sm:text-sm">Weekly</TabsTrigger>
-              <TabsTrigger value="monthly" className="text-xs sm:text-sm">Monthly</TabsTrigger>
+              <TabsTrigger value="daily" className="text-[11px] sm:text-sm px-2 py-1.5 sm:px-3 sm:py-2">Daily</TabsTrigger>
+              <TabsTrigger value="weekly" className="text-[11px] sm:text-sm px-2 py-1.5 sm:px-3 sm:py-2">Weekly</TabsTrigger>
+              <TabsTrigger value="monthly" className="text-[11px] sm:text-sm px-2 py-1.5 sm:px-3 sm:py-2">Monthly</TabsTrigger>
             </TabsList>
             <TabsContent value="daily" className="mt-4">
               <TrendChart data={dailyTrend} period="daily" />
@@ -140,28 +140,32 @@ export default function ReportsPage() {
             </TabsContent>
           </Tabs>
         </CardContent>
-        <CardFooter>
-            <Button variant="outline" size="sm" className="text-xs sm:text-sm"><Download className="mr-2 h-3 w-3 sm:h-4 sm:w-4" /> Export</Button>
+        <CardFooter className="p-4 sm:p-6">
+            <Button variant="outline" size="sm" className="text-xs sm:text-sm h-8 sm:h-9">
+              <Download className="mr-1.5 h-3 w-3 sm:h-4 sm:w-4" /> Export
+            </Button>
         </CardFooter>
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl"><Bot className="h-4 w-4 sm:h-5 sm:w-5" /> AI Report Summary</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-xl">
+            <Bot className="h-4 w-4 sm:h-5 sm:w-5" /> AI Report Summary
+          </CardTitle>
           <CardDescription className="text-xs sm:text-sm">
             Generate a summary of your recent health data.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 p-4 pt-0 sm:p-6 sm:pt-0">
           {isLoading && (
             <div className="flex items-center justify-center p-6 sm:p-8 rounded-lg border border-dashed">
-                <Loader2 className="mr-2 h-5 w-5 sm:h-6 sm:w-6 animate-spin" />
-                <p className="text-sm text-muted-foreground">Generating...</p>
+                <Loader2 className="mr-2 h-4 w-4 sm:h-6 sm:w-6 animate-spin" />
+                <p className="text-xs sm:text-sm text-muted-foreground">Generating...</p>
             </div>
           )}
           {summary && (
              <div className="p-3 sm:p-4 bg-secondary rounded-lg border">
-                <p className="text-xs sm:text-sm text-foreground">{summary.summary}</p>
+                <p className="text-xs sm:text-sm text-foreground leading-relaxed">{summary.summary}</p>
              </div>
           )}
           {!isLoading && !summary && (
@@ -170,44 +174,53 @@ export default function ReportsPage() {
             </div>
           )}
         </CardContent>
-        <CardFooter>
-            <Button onClick={handleGenerateSummary} disabled={isLoading} size="sm" className="text-xs sm:text-sm">
-                {isLoading ? <><Loader2 className="mr-2 h-3 w-3 sm:h-4 sm:w-4 animate-spin" /> Generating...</> : 'Generate Summary'}
+        <CardFooter className="p-4 sm:p-6">
+            <Button onClick={handleGenerateSummary} disabled={isLoading} size="sm" className="text-xs sm:text-sm h-8 sm:h-9">
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-1.5 h-3 w-3 sm:h-4 sm:w-4 animate-spin" /> 
+                    Generating...
+                  </>
+                ) : (
+                  'Generate Summary'
+                )}
             </Button>
         </CardFooter>
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-lg sm:text-xl"><FileText className="h-4 w-4 sm:h-5 sm:w-5" /> Historical Data</CardTitle>
+        <CardHeader className="p-4 sm:p-6">
+          <CardTitle className="flex items-center gap-2 text-base sm:text-xl">
+            <FileText className="h-4 w-4 sm:h-5 sm:w-5" /> Historical Data
+          </CardTitle>
           <CardDescription className="text-xs sm:text-sm">
             Your key metrics from the past week.
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto -mx-6 sm:mx-0">
-            <div className="px-6 sm:px-0">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="text-xs sm:text-sm">Date</TableHead>
-                    <TableHead className="text-right text-xs sm:text-sm">Max</TableHead>
-                    <TableHead className="text-right text-xs sm:text-sm">Avg</TableHead>
-                    <TableHead className="text-right text-xs sm:text-sm">Alerts</TableHead>
+        <CardContent className="p-0 sm:p-6 sm:pt-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-[11px] sm:text-sm pl-4 sm:pl-4">Date</TableHead>
+                  <TableHead className="text-right text-[11px] sm:text-sm">Max</TableHead>
+                  <TableHead className="text-right text-[11px] sm:text-sm">Avg</TableHead>
+                  <TableHead className="text-right text-[11px] sm:text-sm pr-4 sm:pr-4">Alerts</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {weeklyTrend.slice().reverse().map((day) => (
+                  <TableRow key={day.date}>
+                    <TableCell className="font-medium whitespace-nowrap text-[11px] sm:text-sm pl-4 sm:pl-4">
+                      {new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                    </TableCell>
+                    <TableCell className="text-right text-[11px] sm:text-sm">{day.maxTemp.toFixed(1)}</TableCell>
+                    <TableCell className="text-right text-[11px] sm:text-sm">{day.avgTemp.toFixed(1)}</TableCell>
+                    <TableCell className="text-right text-[11px] sm:text-sm pr-4 sm:pr-4">{day.alerts}</TableCell>
                   </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {weeklyTrend.slice().reverse().map((day) => (
-                    <TableRow key={day.date}>
-                      <TableCell className="font-medium whitespace-nowrap text-xs sm:text-sm">{new Date(day.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</TableCell>
-                      <TableCell className="text-right text-xs sm:text-sm">{day.maxTemp.toFixed(1)}</TableCell>
-                      <TableCell className="text-right text-xs sm:text-sm">{day.avgTemp.toFixed(1)}</TableCell>
-                      <TableCell className="text-right text-xs sm:text-sm">{day.alerts}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
