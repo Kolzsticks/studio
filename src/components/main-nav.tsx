@@ -20,7 +20,7 @@ import { SidebarHeader, SidebarContent, SidebarFooter } from '@/components/ui/si
 import { Separator } from './ui/separator';
 import { Button } from './ui/button';
 
-const navItems = [
+export const navItems = [
   { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
   { href: '/dashboard/reports', icon: BarChart3, label: 'Reports' },
   { href: '/dashboard/consultation', icon: MessageSquareHeart, label: 'Consultation' },
@@ -47,7 +47,7 @@ export function MainNav() {
               >
                 <Link href={item.href}>
                   <item.icon className="h-5 w-5 mr-3" />
-                  {item.label}
+                  <span className="group-data-[collapsed=true]:hidden">{item.label}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
@@ -56,9 +56,9 @@ export function MainNav() {
       </SidebarContent>
       <Separator />
       <SidebarFooter className="p-4">
-        <Button>
+        <Button className="w-full">
           <HeartPulse className="mr-2 h-4 w-4" />
-          Trigger a Reading
+          <span className="group-data-[collapsed=true]:hidden">Trigger a Reading</span>
         </Button>
       </SidebarFooter>
     </>

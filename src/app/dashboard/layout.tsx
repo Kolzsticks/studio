@@ -2,7 +2,8 @@ import { Bell, Wifi } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { MainNav } from '@/components/main-nav';
 import { UserNav } from '@/components/user-nav';
-import { SidebarProvider, Sidebar, SidebarInset } from '@/components/ui/sidebar';
+import { SidebarProvider, Sidebar } from '@/components/ui/sidebar';
+import { BottomNav } from '@/components/bottom-nav';
 
 export default function DashboardLayout({
   children,
@@ -12,7 +13,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
-        <Sidebar collapsible="none" variant="sidebar" className="border-r">
+        <Sidebar collapsible="md" variant="sidebar" className="border-r hidden md:flex">
           <MainNav />
         </Sidebar>
         <div className="flex flex-col flex-1">
@@ -32,9 +33,10 @@ export default function DashboardLayout({
               <UserNav />
             </div>
           </header>
-          <main className="flex-1 p-6 md:p-8 bg-background">
+          <main className="flex-1 p-6 md:p-8 bg-background pb-24 md:pb-8">
             {children}
           </main>
+          <BottomNav />
         </div>
       </div>
     </SidebarProvider>
