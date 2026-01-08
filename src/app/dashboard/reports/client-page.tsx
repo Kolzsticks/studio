@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Download, FileText, Waves, User } from 'lucide-react';
+import { Download, FileText, Waves, User, Thermometer } from 'lucide-react';
 import {
   ChartContainer,
   ChartTooltip,
@@ -59,13 +59,19 @@ const chartConfig: ChartConfig = {
 
 function TrendChart({ data }: { data: ScanResult[] }) {
   if (!data || data.length === 0) return null;
+  const chartData = data.map(scan => ({
+      ...scan,
+      ultrasound: scan.readings.ultrasound,
+      temperature: scan.readings.temperature,
+      bioimpedance: scan.readings.bioimpedance
+  }));
 
   return (
     <div className="w-full overflow-x-auto -mx-3 sm:mx-0">
       <div className="min-w-[320px] px-3 sm:px-0">
         <ChartContainer config={chartConfig} className="h-[160px] sm:h-[250px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <RechartsLineChart data={data} margin={{ top: 5, right: 5, left: -25, bottom: 5 }}>
+            <RechartsLineChart data={chartData} margin={{ top: 5, right: 5, left: -25, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" vertical={false} />
               <XAxis
                 dataKey="timestamp"
@@ -91,14 +97,51 @@ function TrendChart({ data }: { data: ScanResult[] }) {
                 stroke="var(--color-ultrasound)"
               />
               <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="line" />} />
-              <Line yAxisId="right" dataKey="readings.ultrasound" name="Ultrasound" type="monotone" stroke="var(--color-ultrasound)" strokeWidth={2} dot={false} />
-              <Line yAxisId="left" dataKey="readings.temperature" name="Temperature" type="monotone" stroke="var(--color-temperature)" strokeWidth={2} dot={false} />
+              <Line yAxisId="right" dataKey="ultrasound" name="Ultrasound" type="monotone" stroke="var(--color-ultrasound)" strokeWidth={2} dot={false} />
+              <Line yAxisId="left" dataKey="temperature" name="Temperature" type="monotone" stroke="var(--color-temperature)" strokeWidth={2} dot={false} />
             </RechartsLineChart>
           </ResponsiveContainer>
         </ChartContainer>
       </div>
     </div>
   );
+}
+
+function TemperatureReport({ data }: { data: ScanResult[] }) {
+    if (!data || data.length === 0) return null;
+
+    const chartData = data.map(scan => ({
+        name: new Date(scan.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        value: scan.readings.temperature
+    }));
+    
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-sm sm:text-xl"><Thermometer /> Temperature Trend</CardTitle>
+                <CardDescription className="text-[10px] sm:text-sm">Monitors thermal variations over time. Significant spikes could be notable.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <ChartContainer config={chartConfig} className="h-[160px] sm:h-[200px] w-full">
+                    <ResponsiveContainer>
+                        <AreaChart data={chartData} margin={{ top: 10, right: 0, left: -25, bottom: 0 }}>
+                            <defs>
+                                <linearGradient id="fillTemperature" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="5%" stopColor="var(--color-temperature)" stopOpacity={0.8}/>
+                                    <stop offset="95%" stopColor="var(--color-temperature)" stopOpacity={0.1}/>
+                                </linearGradient>
+                            </defs>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="name" fontSize={8} tickMargin={8} />
+                            <YAxis unit="°C" domain={['dataMin - 1', 'dataMax + 1']} fontSize={8}/>
+                            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+                            <Area type="monotone" dataKey="value" name="Temperature" stroke="var(--color-temperature)" fill="url(#fillTemperature)" />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                </ChartContainer>
+            </CardContent>
+        </Card>
+    )
 }
 
 function BioimpedanceReport({ data }: { data: ScanResult[] }) {
@@ -233,6 +276,7 @@ export default function ReportsClientPage() {
       </Card>
       
       <UltrasoundReport data={filteredHistory} />
+      <TemperatureReport data={filteredHistory} />
       <BioimpedanceReport data={filteredHistory} />
 
       <Card>

@@ -38,6 +38,16 @@ export default function OnboardingPage() {
   };
 
   const handleNext = () => {
+    // Validate current step's input before proceeding
+    if (step === 1 && !formData.name) {
+        toast({ variant: 'destructive', title: 'Name is required.' });
+        return;
+    }
+    if (step === 2 && !formData.age) {
+        toast({ variant: 'destructive', title: 'Age is required.' });
+        return;
+    }
+
     if (step < TOTAL_STEPS) {
       setStep((prev) => prev + 1);
     }
@@ -51,6 +61,13 @@ export default function OnboardingPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Final validation
+    if (!formData.name || !formData.age || !formData.weight) {
+        toast({ variant: 'destructive', title: 'Please fill in all fields.'});
+        return;
+    }
+
     try {
       localStorage.setItem('onboardingData', JSON.stringify(formData));
       localStorage.setItem('scanHistory', JSON.stringify([])); // Initialize empty scan history

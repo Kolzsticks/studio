@@ -14,11 +14,49 @@ The application is built with a mobile-first approach, ensuring a seamless and i
 - **Real-Time Scanning:** A dedicated "Scan" page allows users to initiate new readings, with a simulated scanning process and immediate results.
 - **Risk Assessment:** A simplified risk logic that categorizes each scan as "Low" or "High" risk based on sensor values.
 - **Dashboard:** A central hub that displays the latest scan results, alerts for high-risk readings, and a history of recent scans.
-- **Detailed Reports:** A comprehensive reporting section with creative visualizations and charts for Ultrasound and Bioimpedance data trends over time.
+- **Detailed Reports:** A comprehensive reporting section with creative visualizations and charts for Ultrasound, Temperature, and Bioimpedance data trends over time.
 - **Data Export:** Functionality to export all scan history into an Excel-compatible CSV file.
 - **Expert Consultation:** A feature to find and book appointments with specialists.
 - **Settings & Personalization:** Users can update their profile, manage notification preferences, and set up emergency contacts for family alerts.
 - **Persistent Data:** The application uses `localStorage` to ensure all user data, including onboarding information and scan history, persists across sessions.
+
+## Core Logic Example: Risk Calculation
+
+The application uses a straightforward logic to determine the risk level from a scan. The `calculateRisk` function in `src/lib/mock-data.ts` is a key part of this assessment.
+
+```typescript
+// src/lib/mock-data.ts
+
+export const calculateRisk = (readings: SensorReading): 'Low' | 'High' => {
+  // Simplified risk logic based on ultrasound value
+  return readings.ultrasound >= 0.7 ? 'High' : 'Low';
+};
+```
+
+## Core Logic Example: Data Persistence with LocalStorage
+
+The application ensures that user data persists across browser sessions by using `localStorage`. Here's how new scan results are saved in `src/app/dashboard/scan/page.tsx`.
+
+```typescript
+// src/app/dashboard/scan/page.tsx
+
+//... inside the startScan function
+try {
+  const result = generateNewScan(isAnomaly);
+  setScanResult(result);
+  setStatus('complete');
+  
+  // Save to localStorage
+  const historyData = localStorage.getItem('scanHistory');
+  const history = historyData ? JSON.parse(historyData) : [];
+  const newHistory = [result, ...history];
+  localStorage.setItem('scanHistory', JSON.stringify(newHistory));
+  
+  //...
+} catch (e) {
+  //...
+}
+```
 
 ## Technology Stack
 
